@@ -1,18 +1,35 @@
 import React from 'react';
 
-// import StartScreen from './StartScreen/StartScreen';
-import QuestionScreen from './QuestionScreen/QuestionScreen';
-// import AnswerScreen from './AnswerScreen/AnswerScreen';
-// import ResultScreen from './ResultScreen/ResultScreen';
+import { StateProvider } from '../state';
+import Screen from '../components/Screen/Screen';
 
 function App() {
+
+  const initialState = {
+    currentScreen: 'start',
+    scoreCard: [],
+    questionCount: 0,
+    questions: []
+  }
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case 'updateCurrentScreen':
+        return {
+          ...state,
+          currentScreen: action.newScreen
+        }
+      default:
+        return state;
+    };
+  };
+
   return (
-    <main className='App'>
-      {/* <StartScreen /> */}
-      <QuestionScreen />
-      {/* <AnswerScreen /> */}
-      {/* <ResultScreen /> */}
-    </main>
+    <StateProvider initialState={initialState} reducer={reducer}>
+      <main className='App'>
+        <Screen />
+      </main>
+    </StateProvider>
   );
 }
 
