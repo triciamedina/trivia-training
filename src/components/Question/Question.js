@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 import OptionsList from '../OptionsList/OptionsList';
 import { Button } from '../Utils/Utils';
@@ -14,11 +14,10 @@ function Question() {
 
     const currentQuestion = questions[questionCount - 1];
 
-    let options = [...currentQuestion.incorrect, currentQuestion.correct];
-
-    useEffect(() => {
-        arrayShuffle(options);
-    });
+    const options = useMemo(
+        () => arrayShuffle([...currentQuestion.incorrect, currentQuestion.correct]),
+        [currentQuestion.incorrect, currentQuestion.correct]
+    );
 
     const onOptionChange = (selected) => {
         setSelectedOption(selected);
