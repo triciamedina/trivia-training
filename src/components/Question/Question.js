@@ -82,6 +82,7 @@ function Question() {
                     answers={answers}
                     selectedAnswer={selectedAnswer}
                     onAnswerChange={onAnswerChange}
+                    hasSubmittedAnswer={hasSubmittedAnswer}
                 />
                 <div>
                     {hasSubmittedAnswer ? renderNextButton() : renderSubmitButton() }

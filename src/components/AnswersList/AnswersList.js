@@ -1,6 +1,6 @@
 import React from 'react';
 
-function AnswersList({ answers= [], onAnswerChange=()=>{}, selectedAnswer='' }) {
+function AnswersList({answers= [], onAnswerChange=()=>{}, selectedAnswer='', hasSubmittedAnswer=false }) {
     return (
         <div>
             {answers.map((option, index) => (
@@ -12,6 +12,7 @@ function AnswersList({ answers= [], onAnswerChange=()=>{}, selectedAnswer='' }) 
                         value={option}
                         onChange={e => onAnswerChange(e.target.value)}
                         checked={option === selectedAnswer ? true : false}
+                        disabled={hasSubmittedAnswer ? true : false}
                         required
                     />
                     {option}
