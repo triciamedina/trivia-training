@@ -4,6 +4,7 @@ import OptionsList from '../OptionsList/OptionsList';
 import { Button } from '../Utils/Utils';
 import { useStateValue } from '../../state';
 import { arrayShuffle } from '../../lib/shuffle';
+import { config } from '../../config';
 
 function Question() {
     const [{ questions, questionCount }, dispatch] = useStateValue();
@@ -48,7 +49,7 @@ function Question() {
         setHasSubmittedAnswer(false);
         setError('');
 
-        if (questionCount >= questions.length) {
+        if (questionCount >= config.MAX_QUESTIONS) {
             dispatch({
                 type: 'showResults'
             });
