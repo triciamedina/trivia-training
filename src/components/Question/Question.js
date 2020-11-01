@@ -20,12 +20,12 @@ function Question() {
         [currentQuestion.incorrect, currentQuestion.correct]
     );
 
-    const onAnswerChange = (selected) => {
+    function onAnswerChange(selected) {
         setSelectedAnswer(selected);
         setError('');
     }
 
-    const handleSubmit = (e) => {
+    function handleSubmit (e) {
         e.preventDefault();
 
         if (selectedAnswer && selectedAnswer.length) {
@@ -41,7 +41,7 @@ function Question() {
         }
     }
 
-    const handleNext = (e) => {
+    function handleNext(e) {
         e.preventDefault();
 
         setSelectedAnswer('');
@@ -57,18 +57,6 @@ function Question() {
                 type: 'handleNextQuestion'
             });
         }
-    }
-
-    const renderSubmitButton = () => {
-        return (
-            <Button onClick={e => handleSubmit(e)}>Submit</Button>
-        )
-    }
-
-    const renderNextButton = () => {
-        return (
-            <Button onClick={e => handleNext(e)}>Next</Button>
-        )
     }
 
     return (
@@ -87,7 +75,10 @@ function Question() {
                     correctAnswer={currentQuestion.correct}
                 />
                 <div>
-                    {hasSubmittedAnswer ? renderNextButton() : renderSubmitButton() }
+                    {hasSubmittedAnswer
+                        ? <Button onClick={e => handleSubmit(e)}>Submit</Button> 
+                        : <Button onClick={e => handleNext(e)}>Next</Button> 
+                    }
                     {error}
                 </div>
             </form>
