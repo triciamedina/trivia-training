@@ -1,36 +1,91 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import OptionsList from '../OptionsList/OptionsList';
 import { Button } from '../Utils/Utils';
 import { useStateValue } from '../../state';
+import { arrayShuffle } from '../../lib/shuffle';
 
 function Question() {
-    const [, dispatch] = useStateValue();
+    const [{ questions, questionCount }, dispatch] = useStateValue();
+    const [ selectedOption, setSelectedOption ] = useState();
+    const [ hasSubmittedAnswer, setHasSubmittedAnswer ] = useState(false);
+    const [ error, setError ] = useState();
 
-    const options = ['Tandem', 'Burger Shack', 'Extraordinary Humans', 'Devmynd'];
+    const currentQuestion = questions[questionCount - 1];
+
+    let options = [...currentQuestion.incorrect, currentQuestion.correct];
+
+    useEffect(() => {
+        arrayShuffle(options);
+    });
+
+    const onOptionChange = (selected) => {
+        setSelectedOption(selected);
+        setError('');
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        dispatch({
-            type: 'updateCurrentScreen',
-            newScreen: 'answer'
-        });
+        if (selectedOption) {
+            const result = currentQuestion.correct === selectedOption ? 'correct' : 'incorrect';
+
+            setHasSubmittedAnswer(true);
+
+            dispatch({
+                type: 'handleSubmitAnswer',
+                newScore: { answer: selectedOption, result: result }
+            });
+        } else {
+            setError('Please select an option.');
+        }
+    }
+
+    const handleNext = (e) => {
+        e.preventDefault();
+
+        setSelectedOption('');
+        setHasSubmittedAnswer(false);
+        setError('');
+
+        if (questionCount >= questions.length) {
+            dispatch({
+                type: 'showResults'
+            });
+        } else {
+            dispatch({
+                type: 'handleNextQuestion'
+            });
+        }
+    }
+
+    const renderSubmitButton = () => {
+        return (
+            <Button onClick={e => handleSubmit(e)}>Submit</Button>
+        )
+    }
+
+    const renderNextButton = () => {
+        return (
+            <Button onClick={e => handleNext(e)}>Next</Button>
+        )
     }
 
     return (
         <section>
-            <h1>Question 1</h1>
+            <h1>
+                Question {questionCount}
+            </h1>
             <form>
-                <p>What was Tandem's previous name?</p>
-                <OptionsList options={options}/>
+                <p>{currentQuestion.question}</p>
+                <OptionsList 
+                    options={options}
+                    selectedOption={selectedOption}
+                    onOptionChange={onOptionChange}
+                />
                 <div>
-                    <Button 
-                        type='submit'
-                        onClick={e => handleSubmit(e)}
-                    >
-                        Submit
-                    </Button>
+                    {hasSubmittedAnswer ? renderNextButton() : renderSubmitButton() }
+                    {error}
                 </div>
             </form>
         </section>

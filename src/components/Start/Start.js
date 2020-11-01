@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { arrayShuffle } from '../../lib/shuffle';
+import DATA from '../../Apprentice_TandemFor400_Data.json';
 import { Button } from '../Utils/Utils';
 import { useStateValue } from '../../state';
 
@@ -7,9 +9,10 @@ function Start() {
     const [, dispatch] = useStateValue();
 
     const handleStart = () => {
+        const questions = arrayShuffle(DATA);
         dispatch({
-            type: 'updateCurrentScreen',
-            newScreen: 'question'
+            type: 'handleTriviaStart',
+            newQuestions: questions
         });
     }
 

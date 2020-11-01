@@ -9,11 +9,33 @@ function App() {
     currentScreen: 'start',
     scoreCard: [],
     questionCount: 0,
-    questions: []
+    questions: [],
   }
 
   const reducer = (state, action) => {
     switch (action.type) {
+      case 'handleTriviaStart': 
+        return {
+          ...state,
+          currentScreen: 'question',
+          questionCount: 1,
+          questions: action.newQuestions
+        }
+      case 'handleSubmitAnswer': 
+        return {
+          ...state,
+          scoreCard: [...state.scoreCard, action.newScore]
+        }
+      case 'handleNextQuestion':
+        return {
+          ...state,
+          questionCount: state.questionCount + 1
+        }
+      case 'showResults':
+        return {
+          ...state,
+          currentScreen: 'results'
+        }
       case 'updateCurrentScreen':
         return {
           ...state,

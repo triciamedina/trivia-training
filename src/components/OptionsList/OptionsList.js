@@ -1,6 +1,6 @@
 import React from 'react';
 
-function OptionsList({ options = [] }) {
+function OptionsList({ options= [], onOptionChange=()=>{}, selectedOption='' }) {
     return (
         <div>
             {options.map((option, index) => (
@@ -10,6 +10,8 @@ function OptionsList({ options = [] }) {
                         id={`option${index}`}
                         name='trivia'
                         value={option}
+                        onChange={e => onOptionChange(e.target.value)}
+                        checked={option === selectedOption ? true : false}
                         required
                     />
                     {option}
