@@ -25,7 +25,7 @@ function Question() {
         setError('');
     }
 
-    function handleSubmit (e) {
+    function handleSubmit(e) {
         e.preventDefault();
 
         if (selectedAnswer && selectedAnswer.length) {
@@ -47,6 +47,7 @@ function Question() {
         setSelectedAnswer('');
         setHasSubmittedAnswer(false);
         setError('');
+        setResult('');
 
         if (questionCount >= config.MAX_QUESTIONS) {
             dispatch({
@@ -69,15 +70,15 @@ function Question() {
                 <AnswersList 
                     answers={answers}
                     selectedAnswer={selectedAnswer}
-                    onAnswerChange={onAnswerChange}
+                    onAnswerChange={(selected) => onAnswerChange(selected)}
                     hasSubmittedAnswer={hasSubmittedAnswer}
                     result={result}
                     correctAnswer={currentQuestion.correct}
                 />
                 <div>
                     {hasSubmittedAnswer
-                        ? <Button onClick={e => handleSubmit(e)}>Submit</Button> 
-                        : <Button onClick={e => handleNext(e)}>Next</Button> 
+                        ? <Button onClick={(e) => handleNext(e)}>Next</Button> 
+                        : <Button onClick={(e) => handleSubmit(e)}>Submit</Button> 
                     }
                     {error}
                 </div>
