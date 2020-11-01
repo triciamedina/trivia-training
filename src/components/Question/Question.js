@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 
-import OptionsList from '../OptionsList/OptionsList';
+import AnswersList from '../AnswersList/AnswersList';
 import { Button } from '../Utils/Utils';
 import { useStateValue } from '../../state';
 import { arrayShuffle } from '../../lib/shuffle';
@@ -8,33 +8,33 @@ import { config } from '../../config';
 
 function Question() {
     const [{ questions, questionCount }, dispatch] = useStateValue();
-    const [ selectedOption, setSelectedOption ] = useState();
+    const [ selectedAnswer, setSelectedAnswer ] = useState();
     const [ hasSubmittedAnswer, setHasSubmittedAnswer ] = useState(false);
     const [ error, setError ] = useState();
 
     const currentQuestion = questions[questionCount - 1];
 
-    const options = useMemo(
+    const answers = useMemo(
         () => arrayShuffle([...currentQuestion.incorrect, currentQuestion.correct]),
         [currentQuestion.incorrect, currentQuestion.correct]
     );
 
-    const onOptionChange = (selected) => {
-        setSelectedOption(selected);
+    const onAnswerChange = (selected) => {
+        setSelectedAnswer(selected);
         setError('');
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (selectedOption) {
-            const result = currentQuestion.correct === selectedOption ? 'correct' : 'incorrect';
+        if (selectedAnswer && selectedAnswer.length) {
+            const result = currentQuestion.correct === selectedAnswer ? 'correct' : 'incorrect';
 
             setHasSubmittedAnswer(true);
 
             dispatch({
                 type: 'handleSubmitAnswer',
-                newScore: { answer: selectedOption, result: result }
+                newScore: { answer: selectedAnswer, result: result }
             });
         } else {
             setError('Please select an option.');
@@ -44,7 +44,7 @@ function Question() {
     const handleNext = (e) => {
         e.preventDefault();
 
-        setSelectedOption('');
+        setSelectedAnswer('');
         setHasSubmittedAnswer(false);
         setError('');
 
@@ -78,10 +78,10 @@ function Question() {
             </h1>
             <form>
                 <p>{currentQuestion.question}</p>
-                <OptionsList 
-                    options={options}
-                    selectedOption={selectedOption}
-                    onOptionChange={onOptionChange}
+                <AnswersList 
+                    answers={answers}
+                    selectedAnswer={selectedAnswer}
+                    onAnswerChange={onAnswerChange}
                 />
                 <div>
                     {hasSubmittedAnswer ? renderNextButton() : renderSubmitButton() }

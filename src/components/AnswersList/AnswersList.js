@@ -1,17 +1,17 @@
 import React from 'react';
 
-function OptionsList({ options= [], onOptionChange=()=>{}, selectedOption='' }) {
+function AnswersList({ answers= [], onAnswerChange=()=>{}, selectedAnswer='' }) {
     return (
         <div>
-            {options.map((option, index) => (
+            {answers.map((option, index) => (
                 <label key={index}>
                     <input 
                         type='radio'
                         id={`option${index}`}
                         name='trivia'
                         value={option}
-                        onChange={e => onOptionChange(e.target.value)}
-                        checked={option === selectedOption ? true : false}
+                        onChange={e => onAnswerChange(e.target.value)}
+                        checked={option === selectedAnswer ? true : false}
                         required
                     />
                     {option}
@@ -21,4 +21,4 @@ function OptionsList({ options= [], onOptionChange=()=>{}, selectedOption='' }) 
     )
 }
 
-export default OptionsList;
+export default AnswersList;

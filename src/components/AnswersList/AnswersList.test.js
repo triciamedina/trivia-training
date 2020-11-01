@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import OptionsList from './OptionsList';
+import AnswersList from './AnswersList';
 
-describe('OptionsList component', () => {
+describe('AnswersList component', () => {
     it('renders without crashing', () => {
         const div = document.createElement('div');
-        ReactDOM.render(<OptionsList />, div);
+        ReactDOM.render(<AnswersList />, div);
         ReactDOM.unmountComponentAtNode(div);
     })
 })
