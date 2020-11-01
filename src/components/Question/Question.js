@@ -10,6 +10,7 @@ function Question() {
     const [{ questions, questionCount }, dispatch] = useStateValue();
     const [ selectedAnswer, setSelectedAnswer ] = useState();
     const [ hasSubmittedAnswer, setHasSubmittedAnswer ] = useState(false);
+    const [ result, setResult ] = useState();
     const [ error, setError ] = useState();
 
     const currentQuestion = questions[questionCount - 1];
@@ -28,9 +29,8 @@ function Question() {
         e.preventDefault();
 
         if (selectedAnswer && selectedAnswer.length) {
-            const result = currentQuestion.correct === selectedAnswer ? 'correct' : 'incorrect';
-
             setHasSubmittedAnswer(true);
+            setResult(currentQuestion.correct === selectedAnswer ? 'correct' : 'incorrect');
 
             dispatch({
                 type: 'handleSubmitAnswer',
@@ -83,6 +83,8 @@ function Question() {
                     selectedAnswer={selectedAnswer}
                     onAnswerChange={onAnswerChange}
                     hasSubmittedAnswer={hasSubmittedAnswer}
+                    result={result}
+                    correctAnswer={currentQuestion.correct}
                 />
                 <div>
                     {hasSubmittedAnswer ? renderNextButton() : renderSubmitButton() }
