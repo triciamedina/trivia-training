@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { arrayShuffle } from '../../lib/shuffle';
-import DATA from '../../Apprentice_TandemFor400_Data.json';
+import TriviaQuestionsService from '../../services/trivia-questions-service';
 import { Button } from '../Utils/Utils';
 import { useStateValue } from '../../state';
 
@@ -9,7 +8,7 @@ function Start() {
     const [, dispatch] = useStateValue();
 
     const handleStart = () => {
-        const questions = arrayShuffle(DATA);
+        const questions = TriviaQuestionsService.getTriviaQuestions();
         dispatch({
             type: 'handleTriviaStart',
             newQuestions: questions

@@ -3,7 +3,7 @@ import React, { useState, useMemo } from 'react';
 import AnswersList from '../AnswersList/AnswersList';
 import { Button } from '../Utils/Utils';
 import { useStateValue } from '../../state';
-import { arrayShuffle } from '../../lib/shuffle';
+import TriviaQuestionsService from '../../services/trivia-questions-service';
 import { config } from '../../config';
 
 function Question() {
@@ -15,7 +15,7 @@ function Question() {
     const currentQuestion = questions[questionCount - 1];
 
     const answers = useMemo(
-        () => arrayShuffle([...currentQuestion.incorrect, currentQuestion.correct]),
+        () => TriviaQuestionsService.shuffle([...currentQuestion.incorrect, currentQuestion.correct]),
         [currentQuestion.incorrect, currentQuestion.correct]
     );
 
