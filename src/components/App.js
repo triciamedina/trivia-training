@@ -36,11 +36,17 @@ function App() {
           ...state,
           currentScreen: 'results'
         }
-      case 'updateCurrentScreen':
+      case 'handleRestart':
         return {
-          ...state,
-          currentScreen: action.newScreen
+          currentScreen: 'question',
+          questionCount: 1,
+          questions: action.newQuestions,
+          scoreCard: [],
         }
+      case 'handleExit':
+          return {
+            ...initialState
+          }
       default:
         return state;
     };
