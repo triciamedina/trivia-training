@@ -4,8 +4,8 @@ function AnswersList({answers= [], onAnswerChange=()=>{}, selectedAnswer='', has
     return (
         <div>
             {answers.map((option, index) => (
-                <div>
-                    <label key={index}>
+                <div key={index}>
+                    <label >
                         <input 
                             type='radio'
                             id={`option${index}`}
