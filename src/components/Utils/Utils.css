@@ -1,0 +1,16 @@
+.Button {
+    background-color: #001229;
+    border: none;
+    padding: 20px 33px;
+    color: #fff;
+    min-width: 200px;
+    transition: all .15s ease-in-out;
+    cursor: pointer;
+    font-family: 'Source Code Pro', monospace;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.Button:hover {
+    background-color: #0a2c49;
+}

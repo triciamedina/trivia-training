@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-
+import './Question.css';
 import AnswersList from '../AnswersList/AnswersList';
 import { Button } from '../Utils/Utils';
 import { useStateValue } from '../../state';
@@ -61,9 +61,9 @@ function Question() {
     }
 
     return (
-        <section>
+        <div className='Question'>
             <h1>
-                Question {questionCount}
+                Question {questionCount} of 10
             </h1>
             <form>
                 <p>{currentQuestion.question}</p>
@@ -83,7 +83,7 @@ function Question() {
                     {error}
                 </div>
             </form>
-        </section>
+        </div>
     )
 }
 
